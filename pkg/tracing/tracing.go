@@ -9,16 +9,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type TracingModel struct {
-	Id           string `bson:"-"`
-	CreatedAt    string `bson:"createdAt"`
-	StatusCode   int    `bson:"statusCode"`
-	Method       int    `bson:"method"`
-	RequestBody  string `bson:"requestBody"`
-	ResponseBody string `bson:"responseBody"`
-	ResponseTime string `bson:"responseTime"`
-}
-
 type Tracing struct {
 	Host           string
 	Port           int
@@ -35,8 +25,7 @@ func (t *Tracing) Connect() {
 	if err != nil {
 		panic(err)
 	}
-
-	fmt.Println("Connected")
+	t.collection = t.client.Database(t.DBName).Collection(t.CollectionName)
 }
 
 func (t *Tracing) Save(i interface{}) {
