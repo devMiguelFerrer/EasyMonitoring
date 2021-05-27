@@ -5,11 +5,11 @@ import (
 	"github.com/devMiguelFerrer/EasyMonitoring/pkg/tracing"
 )
 
-const remoteURL = "http://localhost:8081"
+const remoteURL = "http://localhost:9559"
 const proxyPort = 7000
 
 func main() {
-	track := tracing.Tracing{
+	track := &tracing.Tracing{
 		Host:           "localhost",
 		Port:           27017,
 		DBName:         "DBName",
@@ -18,5 +18,5 @@ func main() {
 
 	track.Connect()
 
-	proxy.Create(remoteURL, proxyPort)
+	proxy.Create(remoteURL, proxyPort, track)
 }
