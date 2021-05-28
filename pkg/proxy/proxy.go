@@ -52,6 +52,9 @@ func handler(p *httputil.ReverseProxy) func(http.ResponseWriter, *http.Request) 
 }
 
 func handleResponse(r *http.Response) error {
+	if len(r.Header.Get("Sec-Websocket-Accept")) > 0 {
+		return nil
+	}
 	resBodyBytes, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Fatal(err)
