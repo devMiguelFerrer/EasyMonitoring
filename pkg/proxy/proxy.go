@@ -52,9 +52,7 @@ func handler(p *httputil.ReverseProxy) func(http.ResponseWriter, *http.Request) 
 }
 
 func handleResponse(r *http.Response) error {
-	// fmt.Println("=>>>>>>>>>>>>>>", r.Header.Get("Sec-Websocket-Accept"))
 	if len(r.Header.Get("Sec-Websocket-Accept")) > 0 {
-		fmt.Println("SOCKET!!!!!!!!!!!!!!!!")
 		return nil
 	}
 	resBodyBytes, err := ioutil.ReadAll(r.Body)
@@ -65,11 +63,10 @@ func handleResponse(r *http.Response) error {
 
 	elpased := int(time.Since(start).Milliseconds())
 	rawTracing := tracingmodel.TracingModel{
-		Method:     r.Request.Method,
-		Url:        r.Request.URL.Path,
-		CreatedAt:  time.Now().String(),
-		StatusCode: r.StatusCode,
-		// ResponseBody: "socket",
+		Method:       r.Request.Method,
+		Url:          r.Request.URL.Path,
+		CreatedAt:    time.Now().String(),
+		StatusCode:   r.StatusCode,
 		ResponseBody: string(resBodyBytes),
 		RequestBody:  string(reqBody),
 		ResponseTime: elpased,
